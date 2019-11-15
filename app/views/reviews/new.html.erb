@@ -15,7 +15,7 @@
       <% end %>
     </h3>
 
-    <%= form_for @submission.student do |f| %>
+    <%= form_for @submission.student, remote: true do |f| %>
       <div class="<%= @submission.student.probation ? 'alert alert-danger' : '' %>">
         <p>Academic probation: &nbsp;<%= f.check_box :probation %></p>
       </div>

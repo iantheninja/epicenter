@@ -58,23 +58,11 @@ private
   def update_student_as_admin
     @student = Student.find(params[:id])
     if @student.update(student_params)
-      if student_params[:plan_id]
-        redirect_to student_payments_path(@student), notice: "Payment plan for #{@student.name} has been updated."
-      end
-      if student_params[:probation]
-        if @student.probation
-          redirect_back(fallback_location: student_courses_path(@student), alert: "#{@student.name} has been placed on academic probation!")
-        else
-          redirect_back(fallback_location: student_courses_path(@student), notice: "#{@student.name} has been removed from academic probation! :)")
-        end
-      end
+      redirect_to student_payments_path(@student), notice: "Payment plan for #{@student.name} has been updated." if student_params[:plan_id]
+      render :update_probation if student_params[:probation]
     else
-      if student_params[:plan_id]
-        redirect_to student_payments_path(@student), alert: "Payment plan update failed."
-      end
-      if student_params[:probation]
-        redirect_back(fallback_location: student_courses_path(@student), alert: "Probation status update failed.")
-      end
+      redirect_to student_payments_path(@student), alert: "Payment plan update failed." if student_params[:plan_id]
+      redirect_back(fallback_location: student_courses_path(@student), alert: "Probation status update failed.") if student_params[:probation]
     end
   end
 

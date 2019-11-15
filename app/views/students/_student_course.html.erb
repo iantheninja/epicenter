@@ -5,7 +5,7 @@
     <% end %>
   </h1>
   <% if current_admin %>
-    <%= form_for @student do |f| %>
+    <%= form_for @student, remote: true do |f| %>
       <div class="<%= @student.probation ? 'alert alert-danger' : '' %>">
         <p>Academic probation: &nbsp;<%= f.check_box :probation %></p>
       </div>
